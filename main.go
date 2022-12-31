@@ -13,6 +13,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	router := routes.Init()
+
 	router.UrlRoute()
 	router.Run("localhost:" + os.Getenv("PORT"))
 }

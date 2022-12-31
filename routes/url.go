@@ -3,6 +3,7 @@ package routes
 import (
 	"stepashka20/url-shortener/controllers"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +12,12 @@ type routerEngine struct {
 }
 
 func Init() *routerEngine {
-	return &routerEngine{gin.Default()}
+	r := gin.Default()
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"POST", "GET", "OPTIONS"},
+	}))
+	return &routerEngine{r}
 }
 
 func (router *routerEngine) UrlRoute() {

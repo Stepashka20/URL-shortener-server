@@ -18,7 +18,7 @@ func GetRedirect(c *gin.Context) {
 	key := c.Param("key")
 
 	var shortURL ShortURL
-	err := findOne(bson.M{"key": key}, &shortURL)
+	err := getOriginalUrl(bson.M{"key": key}, &shortURL)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 		return

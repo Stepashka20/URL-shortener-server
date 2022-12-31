@@ -41,7 +41,7 @@ func ConnectToDB() *mongo.Client {
 	return client
 }
 
-func findOne(filter interface{}, result interface{}) error {
+func getOriginalUrl(filter interface{}, result interface{}) error {
 	collection := client.Database("urls").Collection("shorturls")
 
 	err := collection.FindOne(context.TODO(), filter).Decode(result)
@@ -51,6 +51,8 @@ func findOne(filter interface{}, result interface{}) error {
 	if err != nil {
 		return err
 	}
+	log.Print("Add +1 click")
+	_, _ = collection.UpdateOne(context.TODO(), filter, bson.M{"$inc": bson.M{"clicks": 1}})
 	return nil
 }
 
