@@ -35,7 +35,9 @@ func GetShortUrl(c *gin.Context) {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
-
+	if form.URL[:4] != "http" && form.URL[:5] != "https" {
+		form.URL = "http://" + form.URL
+	}
 	key := generateKey(8)
 
 	InsertNewUrl(key, form.URL)
